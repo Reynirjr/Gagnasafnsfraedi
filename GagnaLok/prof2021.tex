@@ -32,6 +32,13 @@
 \definecolor{numbercolor}{RGB}{128, 0, 128}      % Fjólublár
 \definecolor{identifiercolor}{RGB}{0, 0, 0}      % Svartur
 
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+
 \lstset{
     language=Java,
     basicstyle=\ttfamily,
@@ -235,7 +242,45 @@ Hverjar af eftirfarandi skipunum frá notendum A...E munu þá keyra
     \item \bo{A:} REVOKE SELECT ON Studio FROM C RESTRICT;
 \end{enumerate}
 
+\newpage
 
+\begin{center}
+    \bo{Hluti II - Venslaalgebra o.fl.}
 
+    Svarið að minnsta kosti einni spurningu í þessum hluta og a.m.k.
+    10 spurningum í heild
+\end{center}
+
+\section{7.}
+Skrifið venslaalgebrusegðir sem eru jafngildar eftirfarandi SQL
+fyrirspurnum fyrir töflur $R(A, B, C)$ og $S(C, D).$
+
+\enum
+\item SELECT A,B FROM R,S WHERE B=D
+\item SELECT A,B,D FROM R NATURAL JOIN S
+\item SELECT A,B FROM R RIGHT OUTER NATURAL JOIN S
+\end{enumerate}
+
+\vspace{1cm}
+
+\section{8}
+Hvaða segðir í venslaalgebru gefa sömu útkomu og eftirfarandi
+SQL fyrirspurnir fyrir töflur $R(A, B, C)$ og $S(B, C, D)$? Tiltakið núll eða
+fleiri venslaalgebrusegðir fyrir hverja SQL fyrirspurn.
+
+\bo{SQL fyrirspurnir}
+\begin{itemize}
+    \item A. SELECT A FROM R LEFT OUTER NATURAL JOIN S
+    \item B. SELECT A FROM R,S WHERE R.B=S.B AND R.C=S.C
+    \item C. SELECT A FROM R NATURAL JOIN S
+\end{itemize}
+\bo{Venslaalgerbusegðir}
+\enum
+\item $\pi_A(\sigma_{R.B=S.B\wedge R.C=S.C}(R\times S))$
+\item $\pi_A(R \bowtie S)$
+\item $\pi_A(R \leftouterjoin_{B=C}S)$
+\item $\pi_A(R \bowtie_{B=C}S)$
+\item $\pi_A(R \leftouterjoin S)$
+\end{enumerate}
 
 \end{document}
