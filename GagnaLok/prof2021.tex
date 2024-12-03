@@ -74,6 +74,11 @@
 % Restin af forskriftinni
 \usepackage[pdftex,bookmarks=true,colorlinks=true,pdfauthor={Hafsteinn Einarsson},linkcolor=blue,urlcolor=blue]{hyperref}
 
+%Custom Commands til að auðvelda mér lífið
+\newcommand{\sv}{\textbf{Svar:}}
+\newcommand{\bo}[1]{\textbf{#1}}
+\newcommand{\enum}{\begin{enumerate}[label = \alph*.]}
+
 % Hyphenation
 \hyphenpenalty=5000
 % Page and section numbering
@@ -91,6 +96,146 @@
 \begin{center}
 \LARGE{\textbf{Mínar Lausnir á 2021 prófinu}}
 \end{center}
+
+\newpage
+
+\begin{center}
+    \bo{Hluti I - SQL o.fl.}
+\end{center}
+
+\bo{Svarið að minnsta kosti þremur spurningum í þessum hluta og a.m.k. 10 spurningum í heild}
+
+
+Gerið ráð fyrir að kvikmyndagagnagrunnurinn sé skilgreindur með
+eftirfarandi töfluskilgreiningum.
+
+\begin{verbatim}
+CREATE TABLE MovieExec
+    ( name VARCHAR(25)
+    , address VARCHAR(25)
+    , cert VARCHAR(3) PRIMARY KEY
+    , netWorth INT
+    );
+CREATE TABLE Studio
+    ( name VARCHAR(25) PRIMARY KEY
+    , address VARCHAR(25)
+    , presC VARCHAR(3) REFERENCES MovieExec(cert)
+    );
+CREATE TABLE Movie
+    ( title VARCHAR(25)
+    , year INT
+    , length INT
+    , inColor BOOLEAN
+    , studioName VARCHAR(25) REFERENCES Studio(name)
+    , producerC VARCHAR(3) REFERENCES MovieExec(cert)
+    , PRIMARY KEY(title,year)
+    );
+CREATE TABLE MovieStar
+    ( name VARCHAR(25) PRIMARY KEY
+    , address VARCHAR(25)
+    , gender CHAR(1)
+    , birthdate VARCHAR(10)
+    );
+CREATE TABLE StarsIn
+    ( movieTitle VARCHAR(25)
+    , movieYear INT
+    , starName VARCHAR(25) REFERENCES MovieStar(name)
+    , PRIMARY KEY(movieTitle,movieYear,starName)
+    , FOREIGN KEY(movieTitle,movieYear)
+    REFERENCES Movie(title,year)
+    );
+
+\end{verbatim}
+\section{1.}
+Skrifið SQL fyrirspurnir fyrir eftirfarandi. Write SQL queries for the
+following.
+
+\enum
+\item Finnið titil og ár kvikmyndarinnar sem hefur titil sem er fremst
+í stafrófsröð allra titla.
+\item Finnið nöfn þeirra kvikmyndaframleiðenda sem ekki hafa
+framleitt neina kvikmynd.
+\item Finnið nöfn þeirra kvikmyndavera (studio) sem ekki hafa
+framleitt kvikmynd sem Jack Nicholson lék í.
+\end{enumerate}
+
+\newpage
+
+\section{2.}
+Skrifið SQL fyrirspurnir fyrir eftirfarandi.
+
+\enum
+\item Finnið nöfn þeirra kvikmynda sem hafa samnefnda kvikmynd.
+\item Finnið nöfn þeirra kvikmyndastjarna sem hafa leikið með
+öllum öðrum kvenkyns kvikmyndastjörnum í einhverri kvikmynd.
+\item Finnið fyrir sérhverja kvikmyndastjörnu, sem leikið hefur í
+a.m.k. tveimur kvikmyndum, heildarlengd allra kvikmynda hennar
+(eða hans).
+\end{enumerate}
+
+\vspace{1cm}
+
+\section{3}
+\enum
+\item Finnið fyrir alla kvikmyndaframleiðendur hve margar
+kvikmyndir framleiðandinn hefur framleitt og heildarlengd 
+kvikmyndanna. Athugið að kvikmyndaframleiðandi er ekki sama og
+kvikmyndaver. 
+\item Finnið nafn og heimilisfang þess kvikmyndavers sem framleitt
+hefur mestu heildarlengd kvikmynda.
+\item Finnið nafn og heimilisfang þeirrar kvikmyndastjörnu sem
+leikið hefur í mestri heildarlengd kvikmynda.
+\end{enumerate}
+
+\vspace{1cm}
+
+\section{4.}
+
+\enum 
+\item Finnið þær kvikmyndastjörnur sem léku í öllum kvikmyndum
+þar sem titillinn byrjar á stöfunum ‘Star Trek’.
+\item Finnið nafn þeirrar kvikmyndastjörnu sem leikið hafa í
+kvikmyndum með flestum framleiðanda.
+\end{enumerate}
+
+\vspace{1cm}
+
+\section{5.}
+Miðað við að C og D séu dálkar af tagi VARCHAR(30), hverjar af
+eftirfarandi segðum skila alltaf TRUE?
+
+\enum
+\item C LIKE D OR C IS NULL
+\item D LIKE D OR D IS NULL
+\item C NOT LIKE D OR C LIKE D
+\item C IS NULL OR D IS NULL OR C LIKE D OR D LIKE C
+\end{enumerate}
+
+\newpage
+
+\section{6.}
+Gerið ráð fyrir að gagnagrunnsnotandi A eigi allar töflurnar í
+kvikmyndagagnagrunninum. Gerið ráð fyrir að notendur A...E
+framkvæmi eftirfarandi skipanir í eftirfarandi röð.
+
+\begin{itemize}
+\item \bo{A:} GRANT SELECT ON Studio TO B,C WITH GRANT OPTION;
+\item \bo{B:} GRANT SELECT ON Studio TO C,D WITH GRANT OPTION;
+\item \bo{C:} GRANT SELECT ON Studio TO E;
+\item \bo{B:} REVOKE SELECT ON Studio FROM C CASCADE;
+\end{itemize}
+Hverjar af eftirfarandi skipunum frá notendum A...E munu þá keyra
+án villu?
+\enum
+    \item \bo{A:} SELECT * FROM Studio;
+    \item \bo{B:} SELECT * FROM Studio;
+    \item \bo{C:} SELECT * FROM Studio;
+    \item \bo{D:} SELECT * FROM Studio; 
+    \item \bo{E:} SELECT * FROM Studio;
+    \item \bo{A:} REVOKE SELECT ON Studio FROM C RESTRICT;
+\end{enumerate}
+
+
 
 
 \end{document}
