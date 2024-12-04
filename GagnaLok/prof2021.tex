@@ -224,7 +224,41 @@ a.m.k. tveimur kvikmyndum, heildarlengd allra kvikmynda hennar
 \end{enumerate}
 
 \sv
-
+\enum
+\item SQL skipun til þess að finna myndir sem hafa samnefnda kvikmynd
+\begin{verbatim}
+    SELECT title 
+    FROM Movie
+    GROUP BY title
+    HAVING COUNT(*) > 1;
+\end{verbatim}
+\item SQL skipun til að finna nöfn þeirra kvikmyndastjarna sem hafa leikið með öllum öðrum kvenkynsmyndastjörnum einu sinni
+\begin{verbatim}
+    SELECT name
+    FROM MovieStar AS S1
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM MovieStar AS S2
+        WHERE gender='F'
+        AND NOT EXISTS
+        (SELECT * 
+         FROM StarsIn AS R1, StarsIn AS R2
+         WHERE R1.movieTitle=R2.movieTitle
+            AND R1.movieYear=R2.movieYear
+            AND R1.starNAME=S1.name
+            AND R2.starNAme=S2.name)
+    );
+\end{verbatim}
+\item  SQL skipun til að finna sérhverja kvikmyndastjörnu 
+\begin{verbatim}
+    SELECT starName, SUM(length)
+    FROM starsIN, Movie 
+    WHERE movieYear=year
+    AND movieTitle=title
+    GROUP BY starName
+    HAVING COUNT (*) > 1;
+\end{verbatim}
+\end{enumerate}
 
 
 \vspace{1cm}
