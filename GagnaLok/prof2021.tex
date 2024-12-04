@@ -173,6 +173,42 @@ framleitt neina kvikmynd.
 framleitt kvikmynd sem Jack Nicholson lék í.
 \end{enumerate}
 
+
+\sv
+
+\enum
+\item SQL skipun til að finna titil og ár kvikmyndar sem hefur titil sem er fremstur í stafróinu
+\begin{verbatim}
+    SELECT title, year
+    FROM Movie
+    WHERE title =
+        (SELECT MIN(title)
+        FROM Movie);
+\end{verbatim}
+\item Sql skipun til að finna kvikmyndaframleiðenda sem ekki hafa framleitt neina mynd1
+\begin{verbatim}
+    SELECT name
+    FROM MovieExec
+    WHERE cert NOT IN (
+        SELECT producerC
+        FROM Movie
+    );
+\end{verbatim}
+\item SQL skipun finna þau kvikmyndaver sem ekki hafa framleitt kvikmynd þar sem Jack Nicholson Lék í
+\begin{verbatim}
+    SELECT name
+    FROM Studio
+    WHERE NOT EXISTS
+        (SELECT *
+        FROM Movie,StarsIn
+        WHERE title = movieTitle
+            AND year = movieYear
+            AND studioName = name)
+\end{verbatim}
+\end{enumerate}
+
+
+
 \newpage
 
 \section{2.}
@@ -186,6 +222,10 @@ Skrifið SQL fyrirspurnir fyrir eftirfarandi.
 a.m.k. tveimur kvikmyndum, heildarlengd allra kvikmynda hennar
 (eða hans).
 \end{enumerate}
+
+\sv
+
+
 
 \vspace{1cm}
 
