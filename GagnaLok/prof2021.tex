@@ -261,7 +261,8 @@ a.m.k. tveimur kvikmyndum, heildarlengd allra kvikmynda hennar
 \end{enumerate}
 
 
-\vspace{1cm}
+\newpage
+
 
 \section{3}
 \enum
@@ -275,7 +276,24 @@ hefur mestu heildarlengd kvikmynda.
 leikið hefur í mestri heildarlengd kvikmynda.
 \end{enumerate}
 
+\sv
+
+\enum
+\item \begin{verbatim}
+    SELECT name, SUM(length)
+    FROM MovieExec LEFT OUTER JOIN Movie ON cert=producerC
+    GROUP BY cert, name;
+\end{verbatim}
+\item \begin{verbatim}
+   SELECT name, address
+   FROM Studio
+   
+\end{verbatim}
+\end{enumerate}
+
 \vspace{1cm}
+
+
 
 \section{4.}
 
@@ -297,6 +315,19 @@ eftirfarandi segðum skila alltaf TRUE?
 \item D LIKE D OR D IS NULL
 \item C NOT LIKE D OR C LIKE D
 \item C IS NULL OR D IS NULL OR C LIKE D OR D LIKE C
+\end{enumerate}
+
+\sv
+
+Förum í gegnum þetta 
+
+\enum
+\item C LIKE D OR C IS NULL:
+Hér gæti c verið not like d svo þetta er ekki RESTRICT
+\item D Like D or D is null: hér er D annaðhvort eins og D eða null sem er satt
+\item C NOT LIKE D OR C LIKE D: Myndi halda það en nei C gæti verið null svo þetta er ekki satt
+\item C IS NULL OR D IS NULL OR C LIKE D OR D LIKE C: ósatt c gæti verið not like d og þá er þetta ósatt
+
 \end{enumerate}
 
 \newpage
